@@ -1,0 +1,14 @@
+{
+    "id": 821,
+    "name": "Gotron",
+    "status": "unknown",
+    "species": "Robot",
+    "type": "Ferret Robot",
+    "gender": "Genderless",
+    "image": "https://rickandmortyapi.com/api/character/avatar/821.jpeg",
+    "episode": [
+        "https://rickandmortyapi.com/api/episode/48"
+    ]
+}
+
+
