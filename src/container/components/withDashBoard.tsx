@@ -1,7 +1,8 @@
 "use client"
-import React, {useEffect } from 'react';
-import { fetchPageData } from '../Utils/servicePages';
+import React, { useEffect } from 'react';
+import { fetchCharacter } from '../Utils/servicePages';
 import { useStoreGlobal } from '@/store/useStoreGlobal';
+import { ContainerID } from '@/store/typeStore';
 
 
 const withDashBoard = <P extends object>(
@@ -9,25 +10,28 @@ const withDashBoard = <P extends object>(
 ): React.FC<P> => {
     return (props: P) => {
 
-        const { page, pages, setItems, setPage } = useStoreGlobal()
+        const { pages, containerCharacter, setCharacterContainer, setPageCharacterContainer, selectCharacters } = useStoreGlobal()
+        const containerID: ContainerID[] = ['character1', 'character2']
 
-        const handlePrev = () => {
-            if (page > 1) {
-                setPage(page - 1)
+        const getHandlePage = (id: "character1" | "character2") => ({
+            handlePrev: () => {
+                (containerCharacter[id].page > 1) && setPageCharacterContainer?.(id, containerCharacter[id].page - 1)
+            },
+            handleNext: () => {
+                (containerCharacter[id].page < pages) && setPageCharacterContainer?.(id, containerCharacter[id].page + 1)
             }
-        }
-
-        const handleNext = () => {
-            if (page < pages) {
-                setPage(page + 1)
-            }
-        }
+        })
 
         useEffect(() => {
-            fetchPageData(page.toString()).then(setItems)
-        }, [page])
+            containerID.forEach((id) => {
+                fetchCharacter(containerCharacter[id].page.toString()).then((data) => setCharacterContainer?.(id, data))
+            })
+        }, [containerCharacter.character1.page, containerCharacter.character2.page])
 
-        const action = { handlePrev, handleNext };
+        const action = {
+            getHandlePage
+
+        };
         return <Components {...action} {...props} />;
     };
 };

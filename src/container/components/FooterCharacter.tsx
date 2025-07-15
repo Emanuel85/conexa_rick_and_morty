@@ -1,10 +1,15 @@
 import { useStoreGlobal } from '@/store/useStoreGlobal'
 import React, { FC } from 'react'
-import { IProps } from '../type'
 
-const FooterCharacter: FC<IProps> = ({ handlePrev, handleNext }) => {
-    const { pages, page } = useStoreGlobal()
+interface Props {
+    handlePrev: () => void
+    handleNext: () => void
+    containerID: 'character1' | 'character2'
+}
 
+const FooterCharacter: FC<Props> = ({ handlePrev, handleNext, containerID }) => {
+    const { pages, containerCharacter } = useStoreGlobal()
+    const page = containerCharacter[containerID]?.page
     return (
         <div className="flex items-center justify-center gap-4 mt-4 text-white">
             <span>Página</span>
