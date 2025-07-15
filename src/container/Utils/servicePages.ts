@@ -1,7 +1,7 @@
 import api from "@/service/apiRickAndMorty";
-import { IPages } from "@/service/type";
+import { IItems } from "@/service/type";
 
-export const fetchPageData = async (page: string): Promise<IPages> => {
-    const data = await api.page.getPage(page)
-    return data
+export const fetchPageData = async (page: string): Promise<IItems[]> => {
+    const { results } = await api.page.getPage(page)
+    return results
 }
